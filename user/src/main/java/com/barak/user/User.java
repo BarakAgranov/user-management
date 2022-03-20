@@ -26,10 +26,15 @@ public class User {
             generator = "user_id_sequence"
     )
     private long id;
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
+    @Column(name = "password", nullable = false)
     private String password;
+    @Column(name = "first_name", nullable = false)
     private String firstName;
+    @Column(name = "last_name", nullable = false)
     private String lastName;
+    @Column(name = "user_type", nullable = false)
     private UserType userType;
 
 

@@ -1,12 +1,12 @@
-package com.barak.group.logic;
+package com.barak.group;
 
-import com.barak.group.entities.Group;
 import com.barak.group.enums.ErrorType;
 import com.barak.group.exceptions.ApplicationException;
-import com.barak.group.repositories.GroupRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Slf4j
 @Service
@@ -41,17 +41,28 @@ public class GroupService {
         } catch (Exception e) {
             if (e instanceof ApplicationException) {
                 throw e;
-            } else throw new ApplicationException(ErrorType.GENERAL_ERROR, "general error occurs while trying to delete group: " + groupId);
+            } else throw new ApplicationException(ErrorType.GENERAL_ERROR, "general error occurs while trying to delete groupwith id: " + groupId);
         }
     }
 
-    public Group getGroupById(int groupId) {
+    public Group getGroupById(int groupId) throws ApplicationException {
         try {
-            return groupRepository.getById(groupId);
+            Group group = groupRepository.getById(groupId);
+            if (group != null) {
+                return group;
+            } else throw new ApplicationException(ErrorType.GROUP_DOES_NOT_EXIST, "group with id: " + groupId + " does not exist");
         } catch (Exception e) {
             if (e instanceof ApplicationException) {
+                throw e;
+            } else throw new ApplicationException(ErrorType.GENERAL_ERROR, "general error occurs while trying to find group with id: " + groupId);
+        }
+    }
 
-            }
+    public List<Group> getAllGroups() throws ApplicationException {
+        try {
+            return groupRepository.findAll();
+        } catch (Exception e) {
+            throw new ApplicationException(ErrorType.GENERAL_ERROR, "general error occurs while trying to find all groups");
         }
     }
 
@@ -65,10 +76,7 @@ public class GroupService {
                 log.info("validation for group: " + group.getId(), " failed for not having creator id");
                 throw new ApplicationException(ErrorType.MUST_HAVE_CREATOR_ID, "group must have a creator id in order to be created");
             }
-            if (group.getDepartment() == null) {
-                log.info("validation for group: " + group.getId(), " failed for not having department");
-                throw new ApplicationException(ErrorType.GROUP_MUST_HAVE_DEPARTMENT, "group must be associated with department in order to be created");
-            }
+
         } catch (Exception e) {
             if (e instanceof ApplicationException) {
                 throw e;

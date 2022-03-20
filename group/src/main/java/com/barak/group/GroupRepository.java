@@ -1,6 +1,5 @@
-package com.barak.group.repositories;
+package com.barak.group;
 
-import com.barak.group.entities.Group;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
