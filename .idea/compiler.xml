@@ -20,7 +20,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="group" options="--add-modules java.base" />
       <module name="participation" options="--add-modules java.base" />
-      <module name="permission" options="" />
+      <module name="permission" options="--add-modules java.base" />
       <module name="role" options="--add-modules java.base" />
       <module name="user" options="--add-modules java.base" />
     </option>
