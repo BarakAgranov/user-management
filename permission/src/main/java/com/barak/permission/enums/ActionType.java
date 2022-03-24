@@ -1,4 +1,4 @@
-package com.barak.permission;
+package com.barak.permission.enums;
 
 public enum ActionType {
 

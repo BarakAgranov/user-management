@@ -3,6 +3,7 @@ package com.barak.group;
 import com.barak.group.exceptions.ApplicationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public class GroupController {
         this.groupService = groupService;
     }
 
-    @PostMapping
+    @PostMapping(produces= MediaType.APPLICATION_JSON_VALUE)
     public void createGroup(@RequestBody Group group) throws ApplicationException {
         log.info("group creation request {}", group);
         groupService.createGroup(group);

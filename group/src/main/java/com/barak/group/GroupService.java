@@ -12,18 +12,19 @@ import java.util.List;
 @Service
 public class GroupService {
 
-    private GroupRepository groupRepository;
+    private IGroupRepository groupRepository;
 
     @Autowired
-    public GroupService(GroupRepository groupRepository) {
+    public GroupService(IGroupRepository groupRepository) {
         this.groupRepository = groupRepository;
     }
 
     public void createGroup(Group group) throws ApplicationException {
-        log.info("group creation started");
-        validateGroup(group);
-        log.info("group validation passed successfully");
+
         try {
+            log.info("group creation started");
+            validateGroup(group);
+            log.info("group validation passed successfully");
             groupRepository.save(group);
             log.info("group created successfully");
         } catch (Exception e) {
@@ -69,7 +70,7 @@ public class GroupService {
     private void validateGroup(Group group) throws ApplicationException {
         try {
             if (group.getName() == null) {
-                log.info("validation for group: " + group.getId(), " failed for not having name");
+                log.info("validation for group: " + group.getName(), " failed for not having name");
                 throw new ApplicationException(ErrorType.MUST_HAVE_NAME, "group must have a name in order to be created");
             }
             if (group.getCreatorId() < 0) {

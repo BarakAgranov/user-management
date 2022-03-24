@@ -18,12 +18,12 @@ public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "creator_id")
+    @Column(name = "creator_id", nullable = false)
     private long creatorId;
 
     @ManyToMany

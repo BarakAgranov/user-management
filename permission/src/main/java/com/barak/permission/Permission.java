@@ -1,5 +1,6 @@
 package com.barak.permission;
 
+import com.barak.permission.enums.ActionType;
 import com.barak.permission.enums.ContextType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

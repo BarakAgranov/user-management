@@ -17,7 +17,7 @@ import java.util.List;
 public class RolePermission {
 
     @Id
-    private Long id;
+    private int id;
 
     @Column(name = "name", nullable = false, unique = true)
     private String name;

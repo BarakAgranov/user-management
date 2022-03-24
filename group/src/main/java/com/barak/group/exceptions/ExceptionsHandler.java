@@ -1,15 +1,18 @@
 package com.barak.group.exceptions;
 
 import com.barak.group.enums.ErrorType;
+import org.springframework.web.HttpMediaTypeNotAcceptableException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
 
 import javax.servlet.http.HttpServletResponse;
 
 // Exception handler class
 @RestControllerAdvice
-public class ExceptionsHandler {
+public class ExceptionsHandler extends ExceptionHandlerExceptionResolver {
 
     //	Response - Object in Spring
     @ExceptionHandler
@@ -17,6 +20,7 @@ public class ExceptionsHandler {
     // Variable name is throwable in order to remember that it handles Exception and Error
     public ErrorBean toResponse(Throwable throwable, HttpServletResponse response) {
 
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         //	ErrorBean errorBean;
         if(throwable instanceof ApplicationException) {
 

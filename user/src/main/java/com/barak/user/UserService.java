@@ -14,12 +14,12 @@ import java.util.List;
 @Service
 public class UserService {
 
-    private UserRepository userRepository;
+    private IUserRepository userRepository;
 
     final String ENCRYPTION_TOKEN_SALT = "Encrypted!As!Fuck!03052385";
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(IUserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

@@ -18,11 +18,12 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="clients" options="" />
       <module name="group" options="--add-modules java.base" />
       <module name="participation" options="--add-modules java.base" />
       <module name="permission" options="--add-modules java.base" />
       <module name="role" options="--add-modules java.base" />
-      <module name="user" options="--add-modules java.base" />
+      <module name="user" options="" />
     </option>
   </component>
 </project>
