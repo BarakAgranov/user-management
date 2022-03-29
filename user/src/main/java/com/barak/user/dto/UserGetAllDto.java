@@ -1,4 +1,4 @@
-package com.barak.clients.user;
+package com.barak.user.dto;
 
 public class UserGetAllDto {
 

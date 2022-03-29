@@ -8,10 +8,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="participation" />
-        <module name="permission" />
         <module name="role" />
         <module name="clients" />
+        <module name="permission" />
         <module name="user" />
+        <module name="eureka-server" />
         <module name="group" />
       </profile>
     </annotationProcessing>
@@ -19,10 +20,10 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="clients" options="" />
-      <module name="group" options="--add-modules java.base" />
-      <module name="participation" options="--add-modules java.base" />
-      <module name="permission" options="--add-modules java.base" />
-      <module name="role" options="--add-modules java.base" />
+      <module name="group" options="" />
+      <module name="participation" options="" />
+      <module name="permission" options="" />
+      <module name="role" options="" />
       <module name="user" options="" />
     </option>
   </component>
