@@ -1,8 +1,14 @@
 package com.barak.user.dto;
 
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 public class UserUpdateDto {
 
+
     private long id;
+    @Size(min = 8, max = 32)
     private String password;
     private String firstName;
     private String lastName;
@@ -12,6 +18,9 @@ public class UserUpdateDto {
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public UserUpdateDto() {
     }
 
     public String getPassword() {
@@ -24,6 +33,10 @@ public class UserUpdateDto {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public long getId() {

@@ -16,6 +16,7 @@
         <module>permission</module>
         <module>clients</module>
         <module>eureka-server</module>
+        <module>apigw</module>
     </modules>
 
     <properties>
@@ -23,7 +24,8 @@
         <maven.compiler.target>17</maven.compiler.target>
         <spring.boot.maven.plugin.version>2.6.2</spring.boot.maven.plugin.version>
         <spring.boot.dependencies.version>2.6.2</spring.boot.dependencies.version>
-        <spring.cloud-version>2020.0.3</spring.cloud-version>
+        <spring.cloud-version>2021.0.1</spring.cloud-version>
+        <spring.security.version>5.6.2</spring.security.version>
     </properties>
 
     <dependencies>
@@ -39,6 +41,16 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
             <version>3.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>1.4.2.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+            <version>1.4.2.Final</version>
         </dependency>
     </dependencies>
 
@@ -58,6 +70,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-bom</artifactId>
+                <version>${spring.security.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -69,6 +88,7 @@
                     <artifactId>spring-boot-maven-plugin</artifactId>
                     <version>${spring.boot.maven.plugin.version}</version>
                 </plugin>
+
             </plugins>
         </pluginManagement>
     </build>

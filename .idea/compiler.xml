@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="participation" />
+        <module name="apigw" />
         <module name="role" />
         <module name="clients" />
         <module name="permission" />
@@ -20,6 +21,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="clients" options="" />
+      <module name="eureka-server" options="" />
       <module name="group" options="" />
       <module name="participation" options="" />
       <module name="permission" options="" />

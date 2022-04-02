@@ -48,10 +48,8 @@ public class GroupService {
 
     public Group getGroupById(int groupId) throws ApplicationException {
         try {
-            Group group = groupRepository.getById(groupId);
-            if (group != null) {
-                return group;
-            } else throw new ApplicationException(ErrorType.GROUP_DOES_NOT_EXIST, "group with id: " + groupId + " does not exist");
+            return groupRepository.findById(groupId).orElseThrow(() -> new ApplicationException(ErrorType.GROUP_DOES_NOT_EXIST, "group with id: " + groupId + " does not exist"));
+
         } catch (Exception e) {
             if (e instanceof ApplicationException) {
                 throw e;
@@ -69,12 +67,16 @@ public class GroupService {
 
     private void validateGroup(Group group) throws ApplicationException {
         try {
+            if (groupRepository.existsByName(group.getName())){
+                log.info("validation for group: " + group.getName() + " failed for duplicate name");
+                throw new ApplicationException(ErrorType.MUST_HAVE_UNIQUE_NAME, "group name must be unique");
+            }
             if (group.getName() == null) {
-                log.info("validation for group: " + group.getName(), " failed for not having name");
+                log.info("validation for group: " + group.getName() + " failed for not having name");
                 throw new ApplicationException(ErrorType.MUST_HAVE_NAME, "group must have a name in order to be created");
             }
             if (group.getCreatorId() < 0) {
-                log.info("validation for group: " + group.getId(), " failed for not having creator id");
+                log.info("validation for group: " + group.getId() + " failed for not having creator id");
                 throw new ApplicationException(ErrorType.MUST_HAVE_CREATOR_ID, "group must have a creator id in order to be created");
             }
 

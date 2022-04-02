@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
+import java.io.Serializable;
 
 @Data
 @Builder
@@ -27,12 +29,20 @@ public class User {
     )
     private long id;
     @Column(name = "email", nullable = false, unique = true)
+    @NotBlank(message = "must have email!")
+    @Email(message = "must be in form of email!")
     private String email;
     @Column(name = "password", nullable = false)
+    @Size(min = 8, max = 32)
+    @NotBlank
     private String password;
     @Column(name = "first_name", nullable = false)
+    @Size(min = 2, max = 30)
+    @NotBlank
     private String firstName;
     @Column(name = "last_name", nullable = false)
+    @Size(min = 2, max = 30)
+    @NotBlank
     private String lastName;
     @Column(name = "user_type", nullable = false)
     private UserType userType;
