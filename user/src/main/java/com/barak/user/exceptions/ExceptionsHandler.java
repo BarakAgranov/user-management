@@ -14,68 +14,13 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.util.Locale;
 
-// Exception handler class
+
 @Slf4j
 @ControllerAdvice
 public class ExceptionsHandler extends ExceptionHandlerExceptionResolver {
 
     private ApplicationErrorBean applicationErrorBean = new ApplicationErrorBean();
 
-
-//    @ExceptionHandler(ConstraintViolationException.class)
-//    @ResponseStatus(HttpStatus.BAD_REQUEST)
-//    @ResponseBody
-//    public ValidationErrorBean onConstraintValidationException(
-//            ConstraintViolationException e) {
-//        ValidationErrorBean error = new ValidationErrorBean();
-//        for (ConstraintViolation violation : e.getConstraintViolations()) {
-//            error.getViolations().add(
-//                    new Violation(violation.getPropertyPath().toString(), violation.getMessage()));
-//        }
-//        e.printStackTrace();
-//        return error;
-//    }
-
-//    @ExceptionHandler(MethodArgumentNotValidException.class)
-//    @ResponseStatus(HttpStatus.BAD_REQUEST)
-//    @ResponseBody
-//    public ValidationErrorBean onMethodArgumentNotValidException(
-//            MethodArgumentNotValidException e) {
-//        ValidationErrorBean error = new ValidationErrorBean();
-//        for (FieldError fieldError : e.getBindingResult().getFieldErrors()) {
-//            error.getViolations().add(
-//                    new Violation(fieldError.getField(), fieldError.getDefaultMessage()));
-//        }
-//        e.printStackTrace();
-//        return error;
-//    }
-//
-//
-//    @ExceptionHandler(ApplicationException.class)
-//    @ResponseBody
-//    public ApplicationErrorBean onApplicationException(ApplicationException e, HttpServletResponse response) {
-//
-//        ApplicationException appException = (ApplicationException) e;
-//
-//        int errorNumber = appException.getErrorType().getErrorNumber();
-//
-//        String errorMessage = appException.getMessage();
-//
-//        String errorName = appException.getErrorType().getErrorName();
-//
-//        response.setStatus(errorNumber);
-//
-//
-//        this.applicationErrorBean.setErrorMessage(errorMessage);
-//        this.applicationErrorBean.setErrorName(errorName);
-//        this.applicationErrorBean.setErrorNumber(errorNumber);
-//
-//        if (appException.getErrorType().isShowingStackTrace()) {
-//            appException.printStackTrace();
-//        }
-//
-//        return applicationErrorBean;
-//    }
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public ApplicationErrorBean onException(Exception e, HttpServletResponse response) {

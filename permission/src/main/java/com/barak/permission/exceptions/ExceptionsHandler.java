@@ -1,27 +1,32 @@
 package com.barak.permission.exceptions;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.TransactionSystemException;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import java.util.Locale;
 
-// Exception handler class
+
+@Slf4j
 @ControllerAdvice
 public class ExceptionsHandler extends ExceptionHandlerExceptionResolver {
 
-    //	Response - Object in Spring
-    @ExceptionHandler
+    private ApplicationErrorBean applicationErrorBean = new ApplicationErrorBean();
+
+    @ExceptionHandler(Exception.class)
     @ResponseBody
-    // Variable name is throwable in order to remember that it handles Exception and Error
-    public ErrorBean toResponse(Throwable throwable, HttpServletResponse response) {
+    public ApplicationErrorBean onException(Exception e, HttpServletResponse response) {
 
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        //	ErrorBean errorBean;
-        if(throwable instanceof ApplicationException) {
-
-            ApplicationException appException = (ApplicationException) throwable;
+        if (e instanceof ApplicationException) {
+            ApplicationException appException = (ApplicationException) e;
 
             int errorNumber = appException.getErrorType().getErrorNumber();
 
@@ -31,34 +36,73 @@ public class ExceptionsHandler extends ExceptionHandlerExceptionResolver {
 
             response.setStatus(errorNumber);
 
+            log.info("exception with message: -" + errorMessage);
 
-            ErrorBean errorBean = new ErrorBean(errorNumber, errorName, errorMessage);
+            this.applicationErrorBean.setErrorMessage(errorMessage);
+            this.applicationErrorBean.setErrorName(errorName);
+            this.applicationErrorBean.setErrorNumber(errorNumber);
 
-            errorBean.setErrorMessage(errorMessage);
-            errorBean.setErrorName(errorName);
-            errorBean.setErrorNumber(errorNumber);
-
-            System.out.println(errorBean.getErrorMessage());
-            System.out.println(errorBean.getErrorNumber());
-            System.out.println(errorBean.getErrorName());
-
-            if(appException.getErrorType().isShowingStackTrace()) {
+            if (appException.getErrorType().isShowingStackTrace()) {
                 appException.printStackTrace();
             }
-            System.out.println(errorBean.getErrorMessage());
-            System.out.println(errorBean.getErrorNumber());
-            System.out.println(errorBean.getErrorName());
 
-            return errorBean;
+            return applicationErrorBean;
+        }
+        else if (e instanceof MethodArgumentNotValidException) {
+
+            MethodArgumentNotValidException ex = (MethodArgumentNotValidException) e;
+
+            String message = "";
+            String newMessage = "";
+
+            for (FieldError fieldError : ex.getBindingResult().getFieldErrors()) {
+                message = fieldError.getDefaultMessage().toLowerCase(Locale.ROOT);
+                newMessage = newMessage + " - " + message;
+            }
+
+            log.info("exception with message: -" + newMessage);
+
+            applicationErrorBean.setErrorMessage(newMessage);
+            applicationErrorBean.setErrorNumber(400);
+            applicationErrorBean.setErrorName("VALIDATION_ERROR");
+            response.setStatus(400);
+            e.printStackTrace();
+
+            return applicationErrorBean;
+        }
+        else if (e instanceof TransactionSystemException) {
+
+            ConstraintViolationException ex = (ConstraintViolationException)((TransactionSystemException) e).getOriginalException().getCause();
+
+            String message = "";
+            String newMessage = "";
+
+            for (ConstraintViolation violation : ex.getConstraintViolations()) {
+                message = violation.getMessage().toLowerCase(Locale.ROOT);
+                newMessage = newMessage + " - " + message;
+            }
+
+            log.info("exception with message: -" + newMessage);
+
+            applicationErrorBean.setErrorMessage(newMessage);
+            applicationErrorBean.setErrorNumber(400);
+            applicationErrorBean.setErrorName("VALIDATION_ERROR");
+            response.setStatus(400);
+            e.printStackTrace();
+
+            return applicationErrorBean;
         }
 
-        response.setStatus(800);
+        else {
+            applicationErrorBean.setErrorMessage("general error");
+            applicationErrorBean.setErrorNumber(800);
+            applicationErrorBean.setErrorName("GENERAL_ERROR");
+            response.setStatus(800);
+            e.printStackTrace();
 
-        String errorMessage = throwable.getMessage();
-        ErrorBean errorBean = new ErrorBean(800, "General error", errorMessage);
-        throwable.printStackTrace();
+            return applicationErrorBean;
+        }
 
-        return errorBean;
     }
 
 }

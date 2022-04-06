@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Data
@@ -21,6 +23,8 @@ public class Group {
     private int id;
 
     @Column(name = "name", nullable = false, unique = true)
+    @NotBlank(message = "must have a name!")
+    @Size(min = 2, max = 30)
     private String name;
 
     @Column(name = "creator_id", nullable = false)
@@ -32,5 +36,8 @@ public class Group {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "mainGroup", cascade = CascadeType.REMOVE)
     private List<Group> groups;
 
-
+    public Group(String name, long creatorId) {
+        this.name = name;
+        this.creatorId = creatorId;
+    }
 }

@@ -1,14 +1,14 @@
-package com.barak.participation.exceptions;
+package com.barak.role.exceptions;
 
-public class ErrorBean {
+public class ApplicationErrorBean {
     private int errorNumber;
     private String errorName;
     private String errorMessage;
     
-    public ErrorBean(int errorNumber, String errorName, String errorMessage) {
+    public ApplicationErrorBean(int errorNumber, String errorName, String errorMessage) {
     }
 
-    public ErrorBean() {
+    public ApplicationErrorBean() {
     }
 
     public int getErrorNumber() {

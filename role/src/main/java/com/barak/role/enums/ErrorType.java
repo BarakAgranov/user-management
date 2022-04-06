@@ -3,11 +3,9 @@ package com.barak.role.enums;
 public enum ErrorType {
 
     GENERAL_ERROR(800, "GENERAL_ERROR","General error", true),
-    LOGIN_FAILED(801, "LOGIN_FAILED", "Login failed. Please try again.", false),
-    SIGNUP_FAILED(802, "SIGNUP FAILED", "signup failed, please try again", false),
-    USER_DOES_NOT_EXIST(803, "USER_DOES_NOT_EXIST", "user with the requested id doesn't exist", false),
-    INVALID_PASSWORD(804, "INVALID_PASSWORD", "Password must contain at least 8 characters and at least one digit", false),
-    INVALID_EMAIL(805, "INVALID_EMAIL", "Email address is invalid, Please enter a valid email address", false),
+    ROLE_DOES_NOT_EXIST(803, "ROLE_DOES_NOT_EXIST", "role with the requested id doesn't exist", false),
+    INVALID_NAME(804, "INVALID_NAME", "name must be unique", false),
+    INVALID_PERMISSION(805, "INVALID_PERMISSION", "permission can only appear once per role", false),
     MUST_INSERT_A_VALUE(806, "MUST_INSERT_A_VALUE", "Must insert a value", false);
 
     private int errorNumber;

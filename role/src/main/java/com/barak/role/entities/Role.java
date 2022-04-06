@@ -26,7 +26,7 @@ public class Role {
     @Column(name = "creator_id", nullable = false)
     private long creatorId;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<RolePermission> rolePermissions;
 
 }

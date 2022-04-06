@@ -1,5 +1,9 @@
 package com.barak.group;
 
+import com.barak.group.dto.GroupCreateDto;
+import com.barak.group.dto.GroupGetAllDto;
+import com.barak.group.dto.GroupGetOneDto;
+import com.barak.group.dto.GroupUpdateDto;
 import com.barak.group.exceptions.ApplicationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +25,15 @@ public class GroupController {
     }
 
     @PostMapping(produces= MediaType.APPLICATION_JSON_VALUE)
-    public void createGroup(@RequestBody Group group) throws ApplicationException {
+    public void createGroup(@RequestBody GroupCreateDto group) throws ApplicationException {
         log.info("group creation request {}", group);
         groupService.createGroup(group);
+    }
+
+    @PutMapping
+    public void updateGroup(@RequestBody GroupUpdateDto group) throws ApplicationException {
+        log.info("group update request {}", group);
+        groupService.update(group);
     }
 
     @DeleteMapping(path = "{groupId}")
@@ -33,14 +43,19 @@ public class GroupController {
     }
 
     @GetMapping
-    public List<Group> getAllGroups() throws ApplicationException {
+    public List<GroupGetAllDto> getAllGroups() throws ApplicationException {
         log.info("get all groups request");
         return groupService.getAllGroups();
     }
 
     @GetMapping(path = "{groupId}")
-    public Group getGroupById(@PathVariable("groupId") int groupId) throws ApplicationException {
+    public GroupGetOneDto getGroupById(@PathVariable("groupId") int groupId) throws ApplicationException {
         log.info("get one group request {}", groupId);
         return groupService.getGroupById(groupId);
+    }
+
+    @GetMapping(path = "/sub-groups/{mainGroupId}")
+    public List<GroupGetAllDto> getGroupsByMainGroupId(@PathVariable int mainGroupId){
+        return groupService.getAllGroupsByMainGroupId(mainGroupId);
     }
 }

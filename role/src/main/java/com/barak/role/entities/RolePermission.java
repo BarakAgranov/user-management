@@ -22,7 +22,7 @@ public class RolePermission {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles;
 
 

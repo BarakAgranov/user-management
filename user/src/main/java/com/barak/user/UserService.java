@@ -118,7 +118,7 @@ public class UserService {
         }
     }
 
-    public List<UserGetAllDto> getAllUsers() throws ApplicationException {
+    public List<UserGetAllDto> getAllUsers() {
         try {
             return userRepository.getAllUsersDto();
         } catch (Exception e) {
